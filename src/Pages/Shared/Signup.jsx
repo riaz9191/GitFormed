@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import img1 from "../../assets/signup/1.png";
 import { AuthContext } from "../../Provider/AuthProvider";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useTitle from "../../hooks/useTitle";
 
@@ -59,7 +59,7 @@ const SignUp = () => {
       // await updateProfileData(username, null);
       // Redirect or perform additional actions after successful registration
     } catch (error) {
-      console.error("Registration failed", error.message);
+      console.error("Registration failed", alert(error.message));
       // Handle registration error (display error message, etc.)
     }
   };
@@ -74,7 +74,7 @@ const SignUp = () => {
     }
   };
   return (
-    <div className="lg:mb-10">
+    <div className="">
       <div className="lg:flex lg:h-screen">
         <div className="hidden lg:flex items-center justify-center flex-1 bg-white text-black">
           <div className="max-w-md text-center">
@@ -204,9 +204,11 @@ const SignUp = () => {
             <div className="mt-4 text-sm text-gray-600 text-center">
               <p>
                 Already have an account?{" "}
-                <a href="#" className="text-black hover:underline">
+                <Link to='/login'>
+                <a  className="text-black hover:underline">
                   Login here
                 </a>
+                </Link>
               </p>
             </div>
           </div>

@@ -22,7 +22,7 @@ const Navbar = () => {
         <a>Parent</a>
       </li>
       <li>
-        <a>Item 3</a>
+        <Link to={"/repositories"}>Repository List</Link>
       </li>
     </>
   );
@@ -64,16 +64,20 @@ const Navbar = () => {
             <Link to="/">
               <a
                 onClick={handleLogOut}
-                className="btn bg-gradient-to-r from-[#c48755] to-[#79573a] 
-                      hover:from-[#90633e] hover:to-[#483423] transition-all duration-300 shadow-xl rounded-md">
+                className="btn bg-gradient-to-r from-[#8c3e91] to-[#3a3b79] text-white
+                      hover:from-[#3a3b79] hover:to-[#8c3e91] transition-all duration-300 shadow-xl rounded-md">
                 Logout
               </a>
             </Link>
           ) : (
             <Link to="/login">
-              <a className="btn bg-gradient-to-r from-[#c48755] to-[#79573a] 
-                      hover:from-[#90633e] hover:to-[#483423] rounded-md">Login</a>
-            </Link>
+            <a
+              className="btn bg-gradient-to-r from-[#8c3e91] to-[#3a3b79] text-white
+                            hover:from-[#3a3b79] hover:to-[#8c3e91] rounded-md transition-all duration-300"
+            >
+              Login
+            </a>
+          </Link>
           )}
         </div>
       </div>
