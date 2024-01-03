@@ -34,7 +34,7 @@ const Login = () => {
         let timerInterval;
         Swal.fire({
           title: "Login Successful!",
-          timer: 1500,
+          timer: 1000,
           timerProgressBar: true,
           didOpen: () => {
             Swal.showLoading();
