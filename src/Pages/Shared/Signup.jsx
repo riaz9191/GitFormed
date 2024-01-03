@@ -1,16 +1,17 @@
-import React, {  useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import img1 from "../../assets/signup/1.png";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import useTitle from "../../hooks/useTitle";
 
 const SignUp = () => {
-    const { registerNewUser } = useContext(AuthContext);
-    const location = useLocation();
+  const { registerNewUser, googleLogin } = useContext(AuthContext);
+  const location = useLocation();
   const navigate = useNavigate();
+  useTitle("SignUp");
 
   const from = location.state?.from || "/";
-
 
   const [formData, setFormData] = useState({
     username: "",
@@ -29,7 +30,7 @@ const SignUp = () => {
     try {
       // Call the registerNewUser function from AuthContext
       await registerNewUser(email, password);
-      setFormData({ username: '', email: '', password: '' });
+      setFormData({ username: "", email: "", password: "" });
 
       let timerInterval;
       Swal.fire({
@@ -52,7 +53,7 @@ const SignUp = () => {
           console.log("I was closed by the timer");
         }
       });
-  
+
       navigate(from);
       // You can optionally update the user's display name here using updateProfileData
       // await updateProfileData(username, null);
@@ -62,9 +63,19 @@ const SignUp = () => {
       // Handle registration error (display error message, etc.)
     }
   };
+  const handleGoogleLogin = async () => {
+    try {
+      // Call the signInWithGoogle function from AuthContext
+      await googleLogin();
+      navigate(from);
+    } catch (error) {
+      console.error("Google login failed", error.message);
+      // Handle login error (display error message, etc.)
+    }
+  };
   return (
-    <div>
-      <div className="flex h-screen">
+    <div className="lg:mb-10">
+      <div className="lg:flex lg:h-screen">
         <div className="hidden lg:flex items-center justify-center flex-1 bg-white text-black">
           <div className="max-w-md text-center">
             <img className="w-96 " src={img1} alt="" />
@@ -83,6 +94,7 @@ const SignUp = () => {
               <div className="w-full lg:w-1/2 mb-2 lg:mb-0">
                 <button
                   type="button"
+                  onClick={handleGoogleLogin}
                   className="w-full flex justify-center items-center gap-2 bg-white text-sm text-gray-600 p-2 rounded-md hover:bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 transition-colors duration-300"
                 >
                   <svg
