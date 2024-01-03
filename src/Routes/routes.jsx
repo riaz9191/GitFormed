@@ -4,6 +4,7 @@ import Home from "../Pages/Home/Home";
 import Login from "../Pages/Shared/Login";
 import SignUp from "../Pages/Shared/SignUp";
 import Repositories from "../Pages/Repositories/Repositories";
+import MyRepositories from "../Pages/Repositories/MyRepositories";
 
 export const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ export const router = createBrowserRouter([
       {
         path: "/repositories",
         element: <Repositories/>,
+      },
+      {
+        path: "/myRepositories",
+        element: <MyRepositories/>,
       },
     ]
   },

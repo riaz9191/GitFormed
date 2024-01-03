@@ -24,6 +24,9 @@ const Navbar = () => {
       <li>
         <Link to={"/repositories"}>Repository List</Link>
       </li>
+      <li>
+        <Link to={"/myRepositories"}>My Repositories</Link>
+      </li>
     </>
   );
   return (

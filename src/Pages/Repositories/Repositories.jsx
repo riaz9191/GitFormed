@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Repositories = () => {
   const [repositories, setRepositories] = useState([]);
@@ -58,14 +58,51 @@ const Repositories = () => {
     setVisibleRepositories((prevCount) => prevCount + 10);
   };
 
-  
+  const createRepository = (newRepository) => {
+    setRepositories((prevRepositories) => [newRepository, ...prevRepositories]);
+  };
 
-  
+  const watchRepository = async (repo) => {
+    console.log(repo);
+    console.log("Watching repository with ID:", repo._id);
+    if (watchedRepositories.includes(repo._id)) {
+      alert("You are already watching this repository.");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:5000/watchRepository", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          repositoryId: repo._id,
+          repoName: repo.name, // Include the repository name
+        }),
+      });
+
+      if (response.ok) {
+        setWatchedRepositories((prevWatchedRepositories) => [
+          repo._id,
+          ...prevWatchedRepositories,
+        ]);
+        alert("You are now watching this repository.");
+      } else {
+        const data = await response.json();
+        console.error("Error watching repository:", data.message);
+      }
+    } catch (error) {
+      console.error("Error watching repository:", error.message);
+    }
+  };
   return (
     <div>
       <div className="max-w-3xl mx-auto mt-8 p-8 bg-white rounded shadow">
         <h2 className="text-3xl font-bold mb-6">Repository List</h2>
-        
+        {/* <CreateRepository onRepositoryCreated={createRepository} /> */}
+        {/* <WatchedRepositories watchedRepositories={watchedRepositories} /> */}
+        {/* <PullRequest repositoryId={0} />{" "} */}
         {/* Pass the appropriate repositoryId */}
         <div className="flex items-center mb-4">
           <span className="mr-2">Sort by:</span>
