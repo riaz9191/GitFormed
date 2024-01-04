@@ -7,6 +7,7 @@ import Repositories from "../Pages/Repositories/Repositories";
 import MyRepositories from "../Pages/Repositories/MyRepositories";
 import PrivateRoutes from "./PrivateRoutes";
 import CreateRepository from "../Pages/Repositories/CreateRepository";
+import CreatePullRequest from "../Pages/Repositories/CreatePullRequest";
 
 export const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ export const router = createBrowserRouter([
       {
         path: "/createRepositories",
         element: <PrivateRoutes><CreateRepository/></PrivateRoutes>,
+      },
+      {
+        path: "/pullRepositories",
+        element: <PrivateRoutes><CreatePullRequest/></PrivateRoutes>,
       },
     ]
   },

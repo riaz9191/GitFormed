@@ -132,8 +132,8 @@ const MyRepositories = () => {
     }
   };
   return (
-    <div>
-      <div className="py-20">
+    <div >
+      <div className="py-20 ">
         <div className="max-w-3xl mx-auto mt-8 p-8 bg-[#212e4d] text-white border-2 rounded shadow">
           <h2 className="text-3xl font-bold mb-6">Repository List</h2>
 
@@ -156,36 +156,40 @@ const MyRepositories = () => {
               Sort List
             </button>
           </div>
+         {
+          repositories.length > 0 ? 
           <ul>
-            {repositories.slice(0, visibleRepositories).map((repo) => (
-              <li
-                key={repo._id}
-                className="bg-[#000000] backdrop-filter backdrop-blur-md border-2 p-4 mb-2 rounded-md flex justify-between items-center"
+          {repositories.slice(0, visibleRepositories).map((repo) => (
+            <li
+              key={repo._id}
+              className="bg-[#000000] backdrop-filter backdrop-blur-md border-2 p-4 mb-2 rounded-md flex justify-between items-center"
+            >
+              <div>
+                <h3 className="text-xl font-semibold">{repo.name}</h3>
+                <p>
+                  Watchers: {repo.watchers} - Created at: {repo.createdAt}
+                </p>
+              </div>
+              <button
+                className="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700"
+                onClick={() => watchRepository(repo)}
               >
-                <div>
-                  <h3 className="text-xl font-semibold">{repo.name}</h3>
-                  <p>
-                    Watchers: {repo.watchers} - Created at: {repo.createdAt}
-                  </p>
-                </div>
-                <button
-                  className="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700"
-                  onClick={() => watchRepository(repo)}
-                >
-                  Watch
-                </button>
-                <button
-                  className="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-700"
-                  onClick={() => handleDelete(repo._id)}
-                >
-                  Delete
-                </button>
-                <button className="bg-green-500 text-white py-1 px-2 rounded hover:bg-green-700">
-                  View Details
-                </button>
-              </li>
-            ))}
-          </ul>
+                Watch
+              </button>
+              <button
+                className="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-700"
+                onClick={() => handleDelete(repo._id)}
+              >
+                Delete
+              </button>
+              <button className="bg-green-500 text-white py-1 px-2 rounded hover:bg-green-700">
+                View Details
+              </button>
+            </li>
+          ))}
+        </ul> :
+        <ul><p>You Don't have any repositories.Create one First</p></ul>
+         }
           {visibleRepositories < repositories.length && (
             <button
               className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
