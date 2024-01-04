@@ -21,9 +21,10 @@ const CreateRepository = ({ onRepositoryCreated }) => {
       // Create a new repository object
       const newRepository = {
         name: repoName,
-        createdAt: new Date(),
+        createdAt: new Date().toLocaleDateString('en-GB'), 
         userEmail,
       };
+      console.log(newRepository);
   
       // Send the repository creation request to the server
       const response = await fetch('http://localhost:5000/createRepository', {
@@ -33,8 +34,10 @@ const CreateRepository = ({ onRepositoryCreated }) => {
         },
         body: JSON.stringify(newRepository),
       });
+      console.log(response)
   
       if (response.ok) {
+        alert('Successfully Created')
         // Repository created successfully
         const createdRepository = await response.json();
         onRepositoryCreated(createdRepository);
@@ -43,13 +46,20 @@ const CreateRepository = ({ onRepositoryCreated }) => {
   
       } else {
         // Repository creation failed
-        // const errorData = await response.json();
-        // console.error('Error during repository creation:', response.statusText);
-        // console.error('Error creating repository:', errorData.message);
-        alert('Successfully Created')
+        const errorData = await response.json();
+  
+        if (response.status === 400 && errorData.message.includes("Repository name already exists")) {
+          // Alert if the repository name already exists
+          alert("Repository name already exists. Please choose a different name.");
+        } else {
+          // Other error handling
+          console.error('Error during repository creation:', response.statusText);
+          console.error('Error creating repository:', errorData.message);
+        }
       }
     } catch (error) {
-      // console.error('Error during repository creation:', error.message);
+      // General error handling
+      console.error('Error during repository creation:', error.message);
       console.error('Error creating repository:', error);
     }
   };
