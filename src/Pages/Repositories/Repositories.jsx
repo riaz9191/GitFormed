@@ -98,7 +98,7 @@ const Repositories = () => {
   };    
   return (
     <div className="py-20">
-      <div className="max-w-3xl mx-auto mt-8 p-8 bg-[#111828] text-white border-2 rounded shadow">
+      <div className="max-w-3xl mx-auto mt-8 p-8 bg-[#212e4d] text-white border-2 rounded shadow">
         <h2 className="text-3xl font-bold mb-6">Repository List</h2>
         {/* <CreateRepository onRepositoryCreated={createRepository} /> */}
         {/* <WatchedRepositories watchedRepositories={watchedRepositories} /> */}
@@ -126,7 +126,7 @@ const Repositories = () => {
           {repositories.slice(0, visibleRepositories).map((repo) => (
             <li
               key={repo._id}
-              className="bg-[#111828] border-2 p-4 mb-2 rounded-md flex justify-between items-center"
+              className="bg-[#000000] border-2 p-4 mb-2 rounded-md flex justify-between items-center"
             >
               <div>
                 <h3 className="text-xl font-semibold">{repo.name}</h3>

@@ -6,6 +6,7 @@ import SignUp from "../Pages/Shared/SignUp";
 import Repositories from "../Pages/Repositories/Repositories";
 import MyRepositories from "../Pages/Repositories/MyRepositories";
 import PrivateRoutes from "./PrivateRoutes";
+import CreateRepository from "../Pages/Repositories/CreateRepository";
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
       {
         path: "/myRepositories",
         element: <PrivateRoutes><MyRepositories/></PrivateRoutes>,
+      },
+      {
+        path: "/createRepositories",
+        element: <PrivateRoutes><CreateRepository/></PrivateRoutes>,
       },
     ]
   },

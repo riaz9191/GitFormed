@@ -16,10 +16,10 @@ const Navbar = () => {
   const navOps = (
     <>
       <li>
-        <a>Item 1</a>
+        <NavLink className={({ isActive }) => (isActive ? "active" : "default")} to={"/"}>Home</NavLink >
       </li>
       <li>
-        <a>Parent</a>
+        <NavLink className={({ isActive }) => (isActive ? "active" : "default")} to={"/createRepositories"}>Create Repository</NavLink >
       </li>
       <li>
         <NavLink className={({ isActive }) => (isActive ? "active" : "default")} to={"/repositories"}>Repository List</NavLink >
