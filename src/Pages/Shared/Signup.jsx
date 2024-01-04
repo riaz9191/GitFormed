@@ -74,7 +74,7 @@ const SignUp = () => {
     }
   };
   return (
-    <div className="">
+    <div className="py-16">
       <div className="lg:flex lg:h-screen">
         <div className="hidden lg:flex items-center justify-center flex-1 bg-white text-black">
           <div className="max-w-md text-center">
