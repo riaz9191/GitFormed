@@ -8,3 +8,22 @@
 .default {
   @apply font-medium tracking-wide pr-4 font-normal text-base lg:text-white transition-colors duration-200 hover:text-orange-400;
 }
+
+/* Customize the appearance of the scrollbar */
+body::-webkit-scrollbar {
+  width: 12px; /* width of the scrollbar */
+}
+
+body::-webkit-scrollbar-track {
+  background: #f1f1f1; /* color of the track */
+  border-radius: 10px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #888; /* color of the thumb */
+  border-radius: 10px; /* round corners */
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: #555; /* color of the thumb on hover */
+}

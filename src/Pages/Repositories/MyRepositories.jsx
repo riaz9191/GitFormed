@@ -103,14 +103,14 @@ const MyRepositories = () => {
   return (
     <div >
       <div className="py-20">
-      <div className="max-w-3xl mx-auto mt-8 p-8 bg-white rounded shadow">
+      <div className="max-w-3xl mx-auto mt-8 p-8 bg-[#111828] text-white border-2 rounded shadow">
         <h2 className="text-3xl font-bold mb-6">Repository List</h2>
 
         {/* Pass the appropriate repositoryId */}
         <div className="flex items-center mb-4">
           <span className="mr-2">Sort by:</span>
           <select
-            className="p-2 border rounded"
+            className="p-2 border rounded text-black"
             value={sortOrder}
             onChange={(e) => setSortOrder(e.target.value)}
           >
@@ -129,7 +129,7 @@ const MyRepositories = () => {
           {repositories.slice(0, visibleRepositories).map((repo) => (
             <li
               key={repo._id}
-              className="bg-gray-100 p-4 mb-2 rounded-md flex justify-between items-center"
+              className="bg-[#111828] backdrop-filter backdrop-blur-md border-2 p-4 mb-2 rounded-md flex justify-between items-center"
             >
               <div>
                 <h3 className="text-xl font-semibold">{repo.name}</h3>
