@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -22,16 +22,16 @@ const Navbar = () => {
         <a>Parent</a>
       </li>
       <li>
-        <Link to={"/repositories"}>Repository List</Link>
+        <NavLink className={({ isActive }) => (isActive ? "active" : "default")} to={"/repositories"}>Repository List</NavLink >
       </li>
       <li>
-        <Link to={"/myRepositories"}>My Repositories</Link>
+        <NavLink className={({ isActive }) => (isActive ? "active" : "default")} to={"/myRepositories"}>My Repositories</NavLink >
       </li>
     </>
   );
   return (
     <div>
-      <div className="navbar lg:bg-black  z-10 max-w-screen-xl lg:text-white b">
+      <div className="navbar bg border-b-2 text-white rounded-xl fixed z-20 bg-opacity-50 backdrop-filter backdrop-blur-sm max-w-screen-xl lg:text-white">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -52,10 +52,10 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+              className="text-black menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >{navOps}</ul>
           </div>
-          <a className="btn btn-ghost text-xl">PicaRes</a>
+        <Link to='/'>  <a className="btn btn-ghost text-xl">PicaRes</a></Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
@@ -75,8 +75,8 @@ const Navbar = () => {
           ) : (
             <Link to="/login">
             <a
-              className="btn bg-gradient-to-r from-[#8c3e91] to-[#3a3b79] text-white
-                            hover:from-[#3a3b79] hover:to-[#8c3e91] rounded-md transition-all duration-300"
+              className="btn bg-gradient-to-r from-[#8c3e91] to-[#3a3b79] text-white transition-color duration-200 
+                            hover:bg-gradient-to-r hover:from-[#3a3b79] hover:to-[#8c3e91]  rounded-md "
             >
               Login
             </a>

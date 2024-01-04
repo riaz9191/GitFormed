@@ -17,7 +17,7 @@ const Banner = () => {
    
 
     return (
-        <div className="bg-gray-900">
+        <div className="bg-gray-900 h-full">
             <header>
                
                 <nav className={`pb-5 md:text-sm ${state ? "absolute z-20 top-0 inset-x-0 bg-gray-800 rounded-xl mx-2 mt-2 md:mx-0 md:mt-0 md:relative md:bg-transparent" : ""}`}>
@@ -30,10 +30,10 @@ const Banner = () => {
                 </nav>
             </header>
             <section className="relative mt-5">
-                <div className="relative z-10 max-w-screen-xl mx-auto px-4 py-28 md:px-8">
+                <div className="relative z-10 max-w-screen-xl mx-auto px-4 py-28 lg:py-52 md:px-8">
                     <div className="space-y-5 max-w-4xl mx-auto text-center">
-                        <h2 className="text-4xl text-white font-extrabold mx-auto md:text-5xl">
-                            Build and scale up your startup with the best tools
+                        <h2 className="text-4xl text-[#efefef] font-extrabold mx-auto md:text-5xl">
+                            Build and scale up your startup with <span className='lg:text-[#d5d5d5]'>the best tools</span>
                         </h2>
                         <p className="max-w-2xl mx-auto text-gray-400">
                             Sed ut perspiciatis unde omnis iste natus voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae.

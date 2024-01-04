@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.active {
+  @apply font-medium tracking-wide pr-4 font-bold text-orange-300 transition-colors duration-200;
+}
+.default {
+  @apply font-medium tracking-wide pr-4 font-normal text-base lg:text-white transition-colors duration-200 hover:text-orange-400;
+}

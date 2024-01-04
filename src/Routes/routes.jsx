@@ -5,6 +5,7 @@ import Login from "../Pages/Shared/Login";
 import SignUp from "../Pages/Shared/SignUp";
 import Repositories from "../Pages/Repositories/Repositories";
 import MyRepositories from "../Pages/Repositories/MyRepositories";
+import PrivateRoutes from "./PrivateRoutes";
 
 export const router = createBrowserRouter([
   {
@@ -29,7 +30,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/myRepositories",
-        element: <MyRepositories/>,
+        element: <PrivateRoutes><MyRepositories/></PrivateRoutes>,
       },
     ]
   },

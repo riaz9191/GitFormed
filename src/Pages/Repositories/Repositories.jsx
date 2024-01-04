@@ -95,9 +95,9 @@ const Repositories = () => {
     } catch (error) {
       console.error("Error watching repository:", error.message);
     }
-  };
+  };    
   return (
-    <div>
+    <div className="py-20">
       <div className="max-w-3xl mx-auto mt-8 p-8 bg-white rounded shadow">
         <h2 className="text-3xl font-bold mb-6">Repository List</h2>
         {/* <CreateRepository onRepositoryCreated={createRepository} /> */}

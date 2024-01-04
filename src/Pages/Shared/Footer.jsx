@@ -85,7 +85,7 @@ const Footer = () => {
 ]
 
 return (
-    <footer className="pt-10 bg-gray-800">
+    <footer className="pt-10 bg-[#111827] border-t-2 rounded-md" >
         <div className="max-w-screen-xl mx-auto px-4 md:px-8">
             <div className="justify-between items-center gap-12 md:flex">
                 <div className="flex-1 max-w-lg">
