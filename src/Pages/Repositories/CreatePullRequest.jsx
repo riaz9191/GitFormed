@@ -2,6 +2,7 @@ import  { useContext, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 // import PullRequestList from "./PullRequestList";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const CreatePullRequest = ({ repositoryId, updatePullRequests }) => {
   const { user } = useContext(AuthContext);
@@ -20,13 +21,23 @@ const CreatePullRequest = ({ repositoryId, updatePullRequests }) => {
         body: JSON.stringify({
           repositoryId,
           name: pullRequestTitle,
-          createdAt: new Date().toLocaleString("en-GB", { dateStyle: "short", timeStyle: "short" }),          userEmail,
+          createdAt: new Date().toLocaleString("en-GB", { dateStyle: "short", timeStyle: "short" }),
+          userEmail,
         }),
       });
 
       if (response.ok) {
         const createdPullRequest = await response.json();
-        alert("Success");
+        toast.success(`SuccessFully Created!`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
         setPullRequestTitle(""); // Clear the input field
         console.log("Pull request created:", createdPullRequest);
 

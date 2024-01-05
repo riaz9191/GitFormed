@@ -113,7 +113,7 @@ const MyRepositories = () => {
         },
         body: JSON.stringify({
           repositoryId: repo._id,
-          repoName: repo.name, // Include the repository name
+          repoName: repo.name,
         }),
       });
 

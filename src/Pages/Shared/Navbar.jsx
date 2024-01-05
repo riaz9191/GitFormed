@@ -56,6 +56,14 @@ const Navbar = () => {
           Pull Repositories
         </NavLink>
       </li>
+      <li>
+        <NavLink
+          className={({ isActive }) => (isActive ? "active" : "default")}
+          to={"/watchRepositories"}
+        >
+         Watch Repositories
+        </NavLink>
+      </li>
     </>
   );
   return (

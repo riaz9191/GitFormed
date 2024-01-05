@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../Provider/AuthProvider";
+
 
 const Repositories = () => {
+  const { user } = useContext(AuthContext);   
   const [repositories, setRepositories] = useState([]);
   const [sortOrder, setSortOrder] = useState("alphabetical");
   const [visibleRepositories, setVisibleRepositories] = useState(10);
   const [watchedRepositories, setWatchedRepositories] = useState([]);
-
+  const userEmail = user?.email || "";
   useEffect(() => {
     // Fetch repositories from the server
     const fetchRepositories = async () => {
       try {
         const response = await fetch("http://localhost:5000/repositories");
+        
         if (response.ok) {
           const data = await response.json();
           setRepositories(data.regularRepositories);
@@ -19,6 +23,7 @@ const Repositories = () => {
               repo.id;
             })
           );
+          console.log(response.data)
         } else {
           console.error("Error fetching repositories:", response.statusText);
         }
@@ -78,7 +83,8 @@ const Repositories = () => {
         },
         body: JSON.stringify({
           repositoryId: repo._id,
-          repoName: repo.name, // Include the repository name
+          repoName: repo.name, 
+          userEmail 
         }),
       });
 

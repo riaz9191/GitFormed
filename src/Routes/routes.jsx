@@ -9,6 +9,7 @@ import PrivateRoutes from "./PrivateRoutes";
 import CreateRepository from "../Pages/Repositories/CreateRepository";
 import CreatePullRequest from "../Pages/Repositories/CreatePullRequest";
 import PullRequestList from "../Pages/Repositories/PullRequestList";
+import WatchRepositories from "../Pages/Repositories/WatchRepositories";
 
 export const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ export const router = createBrowserRouter([
       {
         path: "/pullRepositoriesList",
         element: <PrivateRoutes><PullRequestList/></PrivateRoutes>,
+      },
+      {
+        path: "/watchRepositories",
+        element: <PrivateRoutes><WatchRepositories/></PrivateRoutes>,
       },
     ]
   },
