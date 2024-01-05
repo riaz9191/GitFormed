@@ -3,7 +3,24 @@ import React, { useEffect, useState } from "react";
 const PullRequestList = () => {
   const [pullRequests, setPullRequests] = useState([]);
 
-  
+  useEffect(() => {
+    // Fetch pull requests from the server
+    const fetchPullRequests = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/pullRequests");
+        if (response.ok) {
+          const data = await response.json();
+          setPullRequests(data);
+        } else {
+          console.error("Error fetching pull requests:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error fetching pull requests:", error.message);
+      }
+    };
+
+    fetchPullRequests();
+  }, []); 
 
   return (
     <div className="py-20">
