@@ -2,7 +2,7 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 
-const CreateRepository = ({ onRepositoryCreated }) => {
+const CreateRepository = ({  }) => {
   const { user } = useContext(AuthContext);
   const [repoName, setRepoName] = useState("");
   const userEmail = user?.email || "";
@@ -21,7 +21,7 @@ const CreateRepository = ({ onRepositoryCreated }) => {
       // Create a new repository object
       const newRepository = {
         name: repoName,
-        createdAt: new Date().toLocaleDateString('en-GB'), 
+        createdAt: new Date().toLocaleString("en-GB", { dateStyle: "short", timeStyle: "short" }),
         userEmail,
       };
       console.log(newRepository);
@@ -40,7 +40,7 @@ const CreateRepository = ({ onRepositoryCreated }) => {
         alert('Successfully Created')
         // Repository created successfully
         const createdRepository = await response.json();
-        onRepositoryCreated(createdRepository);
+        // onRepositoryCreated(createdRepository);
         setRepoName(""); // Clear the input field
         console.log('Repository created:', createdRepository);
   
