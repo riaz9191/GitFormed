@@ -1,16 +1,20 @@
-import  { useEffect, useState } from "react";
+import  { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 const PullRequestList = () => {
+  const { user } = useContext(AuthContext);
+
   const [pullRequests, setPullRequests] = useState([]);
 
   useEffect(() => {
     // Fetch pull requests from the server
     const fetchPullRequests = async () => {
       try {
-        const response = await fetch("http://localhost:5000/pullRequests");
+        const response = await fetch(`https://gitformed-server.vercel.app/pullRequests?userEmail=${user.email}`);
         if (response.ok) {
           const data = await response.json();
           setPullRequests(data);
+          console.log(data)
         } else {
           console.error("Error fetching pull requests:", response.statusText);
         }
@@ -34,18 +38,23 @@ const PullRequestList = () => {
               <th className="border p-2">Created at</th>
             </tr>
           </thead>
+         {
+          pullRequests.length > 0 ?
           <tbody>
-            {pullRequests.map((pullRequest) => (
-              <tr key={pullRequest._id} className="border">
-                <td className="border p-2">{pullRequest._id}</td>
-                <td className="border p-2">{pullRequest.name}</td>
-                <td className="border p-2">
-                {new Date(pullRequest.createdAt).toLocaleString("en-GB", { dateStyle: "short", timeStyle: "short" })}
+          {pullRequests.map((pullRequest) => (
+            <tr key={pullRequest._id} className="border">
+              <td className="border p-2">{pullRequest._id}</td>
+              <td className="border p-2">{pullRequest.name}</td>
+              <td className="border p-2">
+              {new Date(pullRequest.createdAt).toLocaleString("en-GB", { dateStyle: "short", timeStyle: "short" })}
 
-                </td>
-              </tr>
-            ))}
-          </tbody>
+              </td>
+            </tr>
+          ))}
+        </tbody> 
+        :
+        <ul><p className="my-5 mx-5">You haven't pull any repositories.</p></ul>
+         }
         </table>
       </div>
     </div>

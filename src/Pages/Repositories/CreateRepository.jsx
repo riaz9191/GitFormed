@@ -1,6 +1,6 @@
-// CreateRepository.jsx
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
+import { toast } from "react-toastify";
 
 const CreateRepository = ({  }) => {
   const { user } = useContext(AuthContext);
@@ -10,15 +10,23 @@ const CreateRepository = ({  }) => {
 
   const handleCreateRepository = async (e) => {
     e.preventDefault();
-  
-    // Validate repository name
+
     if (!validateRepositoryName(repoName)) {
-      alert("Invalid repository name. It must match the pattern [A-Za-z0-9-_]{5,10].");
+      
+      toast.success(`Invalid repository name. It must match the pattern [A-Za-z0-9-_]{5,10].`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
       return;
     }
   
     try {
-      // Create a new repository object
       const newRepository = {
         name: repoName,
         createdAt: new Date().toLocaleString("en-GB", { dateStyle: "short", timeStyle: "short" }),
@@ -26,8 +34,7 @@ const CreateRepository = ({  }) => {
       };
       console.log(newRepository);
   
-      // Send the repository creation request to the server
-      const response = await fetch('http://localhost:5000/createRepository', {
+      const response = await fetch('https://gitformed-server.vercel.app/createRepository', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -37,28 +44,42 @@ const CreateRepository = ({  }) => {
       console.log(response)
   
       if (response.ok) {
-        alert('Successfully Created')
-        // Repository created successfully
+        toast.success(`Successfully Created!`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
         const createdRepository = await response.json();
-        // onRepositoryCreated(createdRepository);
-        setRepoName(""); // Clear the input field
+        setRepoName(""); 
         console.log('Repository created:', createdRepository);
   
       } else {
-        // Repository creation failed
         const errorData = await response.json();
   
         if (response.status === 400 && errorData.message.includes("Repository name already exists")) {
           // Alert if the repository name already exists
-          alert("Repository name already exists. Please choose a different name.");
+          toast.info(`Repository name already exists. Please choose a different name.`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
         } else {
-          // Other error handling
+   
           console.error('Error during repository creation:', response.statusText);
           console.error('Error creating repository:', errorData.message);
         }
       }
     } catch (error) {
-      // General error handling
       console.error('Error during repository creation:', error.message);
       console.error('Error creating repository:', error);
     }

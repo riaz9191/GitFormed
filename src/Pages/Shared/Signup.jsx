@@ -4,6 +4,7 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useTitle from "../../hooks/useTitle";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
   const { registerNewUser, googleLogin } = useContext(AuthContext);
@@ -59,7 +60,16 @@ const SignUp = () => {
       // await updateProfileData(username, null);
       // Redirect or perform additional actions after successful registration
     } catch (error) {
-      console.error("Registration failed", alert(error.message));
+      console.error("Registration failed",  toast.warn(error.message), {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
       // Handle registration error (display error message, etc.)
     }
   };

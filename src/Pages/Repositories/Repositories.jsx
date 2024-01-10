@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
+import { toast } from "react-toastify";
 
 
 const Repositories = () => {
@@ -9,11 +10,12 @@ const Repositories = () => {
   const [visibleRepositories, setVisibleRepositories] = useState(10);
   const [watchedRepositories, setWatchedRepositories] = useState([]);
   const userEmail = user?.email || "";
+  // console.log(userEmail)
   useEffect(() => {
     // Fetch repositories from the server
     const fetchRepositories = async () => {
       try {
-        const response = await fetch("http://localhost:5000/repositories");
+        const response = await fetch("https://gitformed-server.vercel.app/repositories");
         
         if (response.ok) {
           const data = await response.json();
@@ -23,7 +25,7 @@ const Repositories = () => {
               repo.id;
             })
           );
-          console.log(response.data)
+          
         } else {
           console.error("Error fetching repositories:", response.statusText);
         }
@@ -63,20 +65,35 @@ const Repositories = () => {
     setVisibleRepositories((prevCount) => prevCount + 10);
   };
 
-  const createRepository = (newRepository) => {
-    setRepositories((prevRepositories) => [newRepository, ...prevRepositories]);
-  };
+  
 
   const watchRepository = async (repo) => {
     console.log(repo);
     console.log("Watching repository with ID:", repo._id);
+    
+    if (!user) {
+    
+      window.location.href = '/login'; 
+      return;
+    }
+    
     if (watchedRepositories.includes(repo._id)) {
-      alert("You are already watching this repository.");
+      
+      toast.success(`You are already watching this repository.`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
       return;
     }
 
     try {
-      const response = await fetch("http://localhost:5000/watchRepository", {
+      const response = await fetch("https://gitformed-server.vercel.app/watchRepository", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -87,16 +104,36 @@ const Repositories = () => {
           userEmail 
         }),
       });
+      console.log(userEmail)
 
       if (response.ok) {
         setWatchedRepositories((prevWatchedRepositories) => [
           repo._id,
           ...prevWatchedRepositories,
         ]);
-        alert("You are now watching this repository.");
+       
+        toast.success(`You are now watching this repository.`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
       } else {
         const data = await response.json();
-        console.error("Error watching repository:", data.message);
+        console.error("Error watching repository:", toast.info(data.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        }));
       }
     } catch (error) {
       console.error("Error watching repository:", error.message);
@@ -137,7 +174,8 @@ const Repositories = () => {
               <div>
                 <h3 className="text-xl font-semibold">{repo.name}</h3>
                 <p>
-                  Watchers: {repo.watchers} - Created at: {repo.createdAt}
+                  {/* Watchers: {repo.watchers}  */}
+                  Created at: {repo.createdAt}
                 </p>
               </div>
               <button
@@ -146,9 +184,7 @@ const Repositories = () => {
               >
                 Watch
               </button>
-              <button className="bg-green-500 text-white py-1 px-2 rounded hover:bg-green-700">
-                View Details
-              </button>
+              
             </li>
           ))}
         </ul>

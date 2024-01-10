@@ -13,7 +13,7 @@ const CreatePullRequest = ({ repositoryId, updatePullRequests }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5000/createPullRequest", {
+      const response = await fetch("https://gitformed-server.vercel.app/createPullRequest", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -36,12 +36,11 @@ const CreatePullRequest = ({ repositoryId, updatePullRequests }) => {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "colored",
+          theme: "dark",
         });
-        setPullRequestTitle(""); // Clear the input field
+        setPullRequestTitle(""); 
         console.log("Pull request created:", createdPullRequest);
 
-        // Update the pull requests in the parent component
         updatePullRequests((prevPullRequests) => [
           createdPullRequest,
           ...prevPullRequests,
@@ -50,7 +49,17 @@ const CreatePullRequest = ({ repositoryId, updatePullRequests }) => {
         const errorData = await response.json();
         console.error(
           "Error during pull request creation:",
-          alert(errorData.message)
+          toast.warn(errorData.message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          })
+          
         );
       }
     } catch (error) {

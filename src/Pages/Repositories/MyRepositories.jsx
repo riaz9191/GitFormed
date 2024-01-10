@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 const MyRepositories = () => {
   const { user } = useContext(AuthContext);
@@ -11,11 +12,11 @@ const MyRepositories = () => {
   const [watchedRepositories, setWatchedRepositories] = useState([]);
 
   useEffect(() => {
-    // Fetch repositories from the server
+    
     const fetchRepositories = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/repositories?userEmail=${user.email}`
+          `https://gitformed-server.vercel.app/repositories?userEmail=${user.email}`
         );
         if (response.ok) {
           const data = await response.json();
@@ -48,7 +49,7 @@ const MyRepositories = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/repositories/${id}`, {
+        fetch(`https://gitformed-server.vercel.app/repositories/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
@@ -93,20 +94,26 @@ const MyRepositories = () => {
     setVisibleRepositories((prevCount) => prevCount + 10);
   };
 
-  const createRepository = (newRepository) => {
-    setRepositories((prevRepositories) => [newRepository, ...prevRepositories]);
-  };
-
   const watchRepository = async (repo) => {
     console.log(repo);
     console.log("Watching repository with ID:", repo._id);
     if (watchedRepositories.includes(repo._id)) {
-      alert("You are already watching this repository.");
+      
+      toast.info(`You are already watching this repository.`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
       return;
     }
 
     try {
-      const response = await fetch("http://localhost:5000/watchRepository", {
+      const response = await fetch("https://gitformed-server.vercel.app/watchRepository", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -122,10 +129,29 @@ const MyRepositories = () => {
           repo._id,
           ...prevWatchedRepositories,
         ]);
-        alert("You are now watching this repository.");
+        // alert("You are now watching this repository.");
+        toast.success(`You are now watching this repository.`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
       } else {
         const data = await response.json();
-        console.error("Error watching repository:", data.message);
+        console.error("Error watching repository:",   toast.info(data.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        }));
       }
     } catch (error) {
       console.error("Error watching repository:", error.message);
@@ -182,9 +208,7 @@ const MyRepositories = () => {
               >
                 Delete
               </button>
-              <button className="bg-green-500 text-white py-1 px-2 rounded hover:bg-green-700">
-                View Details
-              </button>
+              
             </li>
           ))}
         </ul> :

@@ -1,10 +1,17 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { Link, NavLink } from "react-router-dom";
-import './navbar.css'
+import "./navbar.css";
+import Spinner from "./Spinner";
 
 const Navbar = () => {
-  const { user, logOut } = useContext(AuthContext);
+  const { user, logOut,loading } = useContext(AuthContext);
+
+  if (loading) {
+    return (
+      <Spinner className="text-center" animation="border" variant="primary" />
+    );
+  }
 
   const handleLogOut = () => {
     logOut()
@@ -40,35 +47,41 @@ const Navbar = () => {
           Repository List
         </NavLink>
       </li>
-      <li>
-        <NavLink
-          className={({ isActive }) => (isActive ? "active" : "default")}
-          to={"/myRepositories"}
-        >
-          My Repositories
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          className={({ isActive }) => (isActive ? "active" : "default")}
-          to={"/pullRepositories"}
-        >
-          Pull Repositories
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          className={({ isActive }) => (isActive ? "active" : "default")}
-          to={"/watchRepositories"}
-        >
-         Watch Repositories
-        </NavLink>
-      </li>
+      {user?.email ? (
+        <ul className="lg:flex">
+          <li>
+            <NavLink
+              className={({ isActive }) => (isActive ? "active" : "default")}
+              to={"/myRepositories"}
+            >
+              My Repositories
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              className={({ isActive }) => (isActive ? "active" : "default")}
+              to={"/pullRepositories"}
+            >
+              Pull Repositories
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              className={({ isActive }) => (isActive ? "active" : "default")}
+              to={"/watchRepositories"}
+            >
+              Watch Repositories
+            </NavLink>
+          </li>
+        </ul>
+      ) : (
+        <p></p>
+      )}
     </>
   );
   return (
     <div>
-      <div className="navbar bg-black border-b-2 text-white rounded-xl fixed z-20 bg-opacity-50 backdrop-filter backdrop-blur-sm max-w-screen-xl lg:text-white">
+      <div className="navbar bg-black border-b-2 text-white rounded-b-xl fixed z-20 bg-opacity-50 backdrop-filter backdrop-blur-sm max-w-screen-xl lg:text-white">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -96,7 +109,9 @@ const Navbar = () => {
           </div>
           <Link to="/">
             {" "}
-            <a className="btn btn-ghost text-xl">GitFormed</a>
+            <a className="btn btn-ghost text-xl font-bold bg-gradient-to-r from-[#f9ce3e] to-[#3af6ea] bg-clip-text text-transparent">
+              GitFormed
+            </a>
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">

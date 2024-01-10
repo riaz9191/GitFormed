@@ -19,7 +19,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       pauseOnFocusLoss
       draggable
       pauseOnHover
-      theme="colored"
+      theme="dark"
     />
     <div className="max-w-screen-xl m-auto ">
       <AuthProvider>
