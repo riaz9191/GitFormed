@@ -57,7 +57,6 @@ GitFormed is a web application that allows users to manage repositories, create 
 - Node.js
 - Firebase Authentication
 - MongoDB
-- Monaco Editor
 
 **Contributions Welcome**
 - We welcome contributions! Feel free to fork the repository and submit pull requests.
