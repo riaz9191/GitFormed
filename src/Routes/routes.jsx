@@ -10,6 +10,7 @@ import CreateRepository from "../Pages/Repositories/CreateRepository";
 import CreatePullRequest from "../Pages/Repositories/CreatePullRequest";
 import PullRequestList from "../Pages/Repositories/PullRequestList";
 import WatchRepositories from "../Pages/Repositories/WatchRepositories";
+import Error404 from "../Pages/Error/Error404.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ export const router = createBrowserRouter([
         element: <PrivateRoutes><CreatePullRequest/></PrivateRoutes>,
       },
       {
+        path: "/createPullRequest/:repositoryId",
+        element: <PrivateRoutes><CreatePullRequest/></PrivateRoutes>,
+      },
+      {
         path: "/pullRepositoriesList",
         element: <PrivateRoutes><PullRequestList/></PrivateRoutes>,
       },
@@ -53,5 +58,9 @@ export const router = createBrowserRouter([
         element: <PrivateRoutes><WatchRepositories/></PrivateRoutes>,
       },
     ]
+  },
+  {
+    path: "*",
+    element: <Error404 />,
   },
 ]);

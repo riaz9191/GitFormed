@@ -1,20 +1,19 @@
-import  { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
+import { toast } from "react-toastify";
 
 const PullRequestList = () => {
   const { user } = useContext(AuthContext);
-
   const [pullRequests, setPullRequests] = useState([]);
 
   useEffect(() => {
-    // Fetch pull requests from the server
     const fetchPullRequests = async () => {
       try {
         const response = await fetch(`https://gitformed-server.vercel.app/pullRequests?userEmail=${user.email}`);
         if (response.ok) {
           const data = await response.json();
           setPullRequests(data);
-          console.log(data)
+          console.log(data);
         } else {
           console.error("Error fetching pull requests:", response.statusText);
         }
@@ -24,7 +23,25 @@ const PullRequestList = () => {
     };
 
     fetchPullRequests();
-  }, []); 
+  }, [user.email]);
+
+  useEffect(() => {
+    // Check for new pull requests and show notification
+    const hasNewPullRequest = pullRequests.some(pr => pr.isNew);
+    
+    if (hasNewPullRequest) {
+      toast.info("New pull request created!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+  }, [pullRequests]);
 
   return (
     <div className="py-20">
@@ -38,23 +55,27 @@ const PullRequestList = () => {
               <th className="border p-2">Created at</th>
             </tr>
           </thead>
-         {
-          pullRequests.length > 0 ?
-          <tbody>
-          {pullRequests.map((pullRequest) => (
-            <tr key={pullRequest._id} className="border">
-              <td className="border p-2">{pullRequest._id}</td>
-              <td className="border p-2">{pullRequest.name}</td>
-              <td className="border p-2">
-              {new Date(pullRequest.createdAt).toLocaleString("en-GB", { dateStyle: "short", timeStyle: "short" })}
-
-              </td>
-            </tr>
-          ))}
-        </tbody> 
-        :
-        <ul><p className="my-5 mx-5">You haven't pull any repositories.</p></ul>
-         }
+          {pullRequests.length > 0 ? (
+            <tbody>
+              {pullRequests.map((pullRequest) => (
+                <tr key={pullRequest._id} className="border">
+                  <td className="border p-2">{pullRequest._id}</td>
+                  <td className="border p-2">{pullRequest.name}</td>
+                  <td className="border p-2">
+                    {pullRequest.createdAt}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          ) : (
+            <tbody>
+              <tr>
+                <td colSpan="3" className="border p-2 text-center">
+                  You haven't created any pull requests.
+                </td>
+              </tr>
+            </tbody>
+          )}
         </table>
       </div>
     </div>

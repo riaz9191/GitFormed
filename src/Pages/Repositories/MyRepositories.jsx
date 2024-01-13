@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 const MyRepositories = () => {
   const { user } = useContext(AuthContext);
-
+  const userEmail = user?.email || "";
   const [repositories, setRepositories] = useState([]);
   const [sortOrder, setSortOrder] = useState("alphabetical");
   const [visibleRepositories, setVisibleRepositories] = useState(10);
@@ -95,8 +95,7 @@ const MyRepositories = () => {
   };
 
   const watchRepository = async (repo) => {
-    console.log(repo);
-    console.log("Watching repository with ID:", repo._id);
+
     if (watchedRepositories.includes(repo._id)) {
       
       toast.info(`You are already watching this repository.`, {
@@ -121,6 +120,7 @@ const MyRepositories = () => {
         body: JSON.stringify({
           repositoryId: repo._id,
           repoName: repo.name,
+          userEmail 
         }),
       });
 
@@ -193,7 +193,8 @@ const MyRepositories = () => {
               <div>
                 <h3 className="text-xl font-semibold">{repo.name}</h3>
                 <p>
-                  Watchers: {repo.watchers} - Created at: {repo.createdAt}
+                  {/* Watchers: {repo.watchers} - */}
+                  Created at: {repo.createdAt}
                 </p>
               </div>
               <button

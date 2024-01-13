@@ -1,4 +1,4 @@
-import  { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 // import PullRequestList from "./PullRequestList";
 import { Link } from "react-router-dom";
@@ -21,7 +21,10 @@ const CreatePullRequest = ({ repositoryId, updatePullRequests }) => {
         body: JSON.stringify({
           repositoryId,
           name: pullRequestTitle,
-          createdAt: new Date().toLocaleString("en-GB", { dateStyle: "short", timeStyle: "short" }),
+          createdAt: new Date().toLocaleString("en-GB", {
+            dateStyle: "short",
+            timeStyle: "short",
+          }),
           userEmail,
         }),
       });
@@ -38,13 +41,19 @@ const CreatePullRequest = ({ repositoryId, updatePullRequests }) => {
           progress: undefined,
           theme: "dark",
         });
-        setPullRequestTitle(""); 
+        setPullRequestTitle("");
         console.log("Pull request created:", createdPullRequest);
 
         updatePullRequests((prevPullRequests) => [
           createdPullRequest,
           ...prevPullRequests,
         ]);
+        // Notify new pull request
+        const socket = new WebSocket("wss://https://gitformed-server.vercel.app/"); 
+        socket.addEventListener("open", () => {
+          socket.send(JSON.stringify(createdPullRequest));
+          socket.close();
+        });
       } else {
         const errorData = await response.json();
         console.error(
@@ -59,7 +68,6 @@ const CreatePullRequest = ({ repositoryId, updatePullRequests }) => {
             progress: undefined,
             theme: "dark",
           })
-          
         );
       }
     } catch (error) {
@@ -89,12 +97,18 @@ const CreatePullRequest = ({ repositoryId, updatePullRequests }) => {
           >
             Create Pull Request
           </button>
+          <Link
+            to={`/watchRepositories`}
+            className="ml-4 text-gray-400 hover:text-gray-200"
+          >
+            Cancel
+          </Link>
         </form>
         <div className="mt-6 flex justify-center">
           <Link to="/pullRepositoriesList">
             <button className="group cursor-pointer relative cursor-default w-[120px] h-[60px] bg-[linear-gradient(144deg,_#af40ff,_#5b42f3_50%,_#00ddeb)] text-white whitespace-nowrap flex flex-wrap rounded-lg overflow-hidden">
               <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none">
-                See All 
+                See All
               </span>
               <div className="w-[10px] h-[10px] blur-[5px] bg-[rgb(30,41,59)] delay-[0.2s] duration-[0.4s] hover:bg-transparent hover:delay-0 hover:duration-0 group-focus:bg-transparent group-focus:delay-[0.5s]"></div>
               <div className="w-[10px] h-[10px] blur-[5px] bg-[rgb(30,41,59)] delay-[0.2s] duration-[0.4s] hover:bg-transparent hover:delay-0 hover:duration-0 group-focus:bg-transparent group-focus:delay-[2s]"></div>

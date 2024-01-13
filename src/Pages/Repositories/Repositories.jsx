@@ -2,9 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { toast } from "react-toastify";
 
-
 const Repositories = () => {
-  const { user } = useContext(AuthContext);   
+  const { user } = useContext(AuthContext);
   const [repositories, setRepositories] = useState([]);
   const [sortOrder, setSortOrder] = useState("alphabetical");
   const [visibleRepositories, setVisibleRepositories] = useState(10);
@@ -15,8 +14,10 @@ const Repositories = () => {
     // Fetch repositories from the server
     const fetchRepositories = async () => {
       try {
-        const response = await fetch("https://gitformed-server.vercel.app/repositories");
-        
+        const response = await fetch(
+          "https://gitformed-server.vercel.app/repositories"
+        );
+
         if (response.ok) {
           const data = await response.json();
           setRepositories(data.regularRepositories);
@@ -25,7 +26,6 @@ const Repositories = () => {
               repo.id;
             })
           );
-          
         } else {
           console.error("Error fetching repositories:", response.statusText);
         }
@@ -65,20 +65,13 @@ const Repositories = () => {
     setVisibleRepositories((prevCount) => prevCount + 10);
   };
 
-  
-
   const watchRepository = async (repo) => {
-    console.log(repo);
-    console.log("Watching repository with ID:", repo._id);
-    
     if (!user) {
-    
-      window.location.href = '/login'; 
+      window.location.href = "/login";
       return;
     }
-    
+
     if (watchedRepositories.includes(repo._id)) {
-      
       toast.success(`You are already watching this repository.`, {
         position: "top-right",
         autoClose: 5000,
@@ -93,25 +86,28 @@ const Repositories = () => {
     }
 
     try {
-      const response = await fetch("https://gitformed-server.vercel.app/watchRepository", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          repositoryId: repo._id,
-          repoName: repo.name, 
-          userEmail 
-        }),
-      });
-      console.log(userEmail)
+      const response = await fetch(
+        "https://gitformed-server.vercel.app/watchRepository",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            repositoryId: repo._id,
+            repoName: repo.name,
+            userEmail,
+          }),
+        }
+      );
+      console.log(userEmail);
 
       if (response.ok) {
         setWatchedRepositories((prevWatchedRepositories) => [
           repo._id,
           ...prevWatchedRepositories,
         ]);
-       
+
         toast.success(`You are now watching this repository.`, {
           position: "top-right",
           autoClose: 5000,
@@ -124,21 +120,24 @@ const Repositories = () => {
         });
       } else {
         const data = await response.json();
-        console.error("Error watching repository:", toast.info(data.message, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        }));
+        console.error(
+          "Error watching repository:",
+          toast.info(data.message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          })
+        );
       }
     } catch (error) {
       console.error("Error watching repository:", error.message);
     }
-  };    
+  };
   return (
     <div className="py-20">
       <div className="max-w-3xl mx-auto mt-8 p-8 bg-[#212e4d] text-white border-2 rounded shadow">
@@ -146,7 +145,6 @@ const Repositories = () => {
         {/* <CreateRepository onRepositoryCreated={createRepository} /> */}
         {/* <WatchedRepositories watchedRepositories={watchedRepositories} /> */}
         {/* <PullRequest repositoryId={0} />{" "} */}
-        {/* Pass the appropriate repositoryId */}
         <div className="flex items-center mb-4">
           <span className="mr-2">Sort by:</span>
           <select
@@ -184,7 +182,6 @@ const Repositories = () => {
               >
                 Watch
               </button>
-              
             </li>
           ))}
         </ul>
